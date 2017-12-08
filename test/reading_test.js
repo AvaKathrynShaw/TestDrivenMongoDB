@@ -10,10 +10,17 @@ describe("Reading users out of the database", () => {
   });
 
   it("finds all users with a name of joe", done => {
-    //User.find(criteria) finds all instances
-    //User.findOne(criteria) returns a single record
+    //User.find(criteria) returns array of all instances
     User.find({ name: "Joe" }).then(users => {
       assert(users[0]._id.toString() === joe._id.toString());
+      done();
+    });
+  });
+
+  it("find a user with a paticular id", done => {
+    //User.findOne(criteria) returns a single record
+    User.findOne({ _id: joe._id }).then(user => {
+      assert(user.name === "Joe");
       done();
     });
   });
