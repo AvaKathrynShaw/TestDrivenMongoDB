@@ -4,7 +4,7 @@
   "description": "MongoDB Practice",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "nodemon --exec \"mocha -R min\""
   },
   "author": "Ava Shaw",
   "license": "ISC",
