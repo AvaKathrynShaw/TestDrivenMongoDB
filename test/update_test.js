@@ -5,7 +5,7 @@ describe("Updating Records", () => {
   let joe;
 
   beforeEach(done => {
-    joe = new User({ name: "Joe" });
+    joe = new User({ name: "Joe", postCount: 0 });
     joe.save().then(() => done());
   });
 
@@ -36,5 +36,9 @@ describe("Updating Records", () => {
 
   it("A model class can find a record with an id and update", done => {
     assertName(User.findByIdAndUpdate(joe._id, { name: "Alex" }), done);
+
+    it("A user can have their postcount incremented by 1", () => {
+      joe.set("postCount", 1);
+    });
   });
 });
