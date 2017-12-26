@@ -13,13 +13,27 @@ const UserSchema = new Schema(
       },
       required: [true, "Name is required."]
     },
-    postCount: Number,
-    posts: [PostSchema]
+    //postCount: Number,
+    posts: [PostSchema],
+    likes: Number
   },
   {
     usePushEach: true
   }
 );
+
+//Add virtual properties outside of the user schema
+UserSchema.virtual("postCount").get(function() {
+  return this.posts.length;
+  //console.log("Hi");
+});
+
+//Add Middleware
+UserSchema.pre("remove", function() {
+  const BlogPost = mongoose.model("blogPost");
+
+  BlogPost.remove({ _id: { $in: this.blogPosts } });
+});
 
 //Set the structure to the entire collection of users
 const User = mongoose.model("user", UserSchema);

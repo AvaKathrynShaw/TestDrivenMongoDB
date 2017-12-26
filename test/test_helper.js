@@ -16,11 +16,13 @@ before(done => {
 
 //Add Hook to run isolated tests
 //Done parameter is a cb that returns true when this is completed running
-beforeEach(done => {
-  //Take all the records that are inside the users collection and delete them
-  mongoose.connection.collections.users.drop(() => {
-    //Ready to run next test
-    //Add done callback
-    done();
+beforeEach((done) => {
+  const { users, comments, blogposts } = mongoose.connection.collections;
+  users.drop(() => {
+    comments.drop(() => {
+      blogposts.drop(() => {
+        done();
+      });
+    });
   });
 });
