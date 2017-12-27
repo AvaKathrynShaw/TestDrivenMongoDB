@@ -29,10 +29,11 @@ UserSchema.virtual("postCount").get(function() {
 });
 
 //Add Middleware
-UserSchema.pre("remove", function() {
+UserSchema.pre("remove", function(next) {
   const BlogPost = mongoose.model("blogPost");
 
-  BlogPost.remove({ _id: { $in: this.blogPosts } });
+  BlogPost.remove({ _id: { $in: this.blogPosts } })
+  .then(() => next());
 });
 
 //Set the structure to the entire collection of users
